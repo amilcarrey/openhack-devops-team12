@@ -6,12 +6,12 @@ on:
     branches: [ main ]
     paths:
       - apis/trips/**
-      - .github/workflows/test_POI.yml
+      - .github/workflows/test_trips.yml
   pull_request:
     branches: [ main ]
     paths:
       - apis/trips/**
-      - .github/workflows/test_POI.yml
+      - .github/workflows/test_trips.yml
 env: 
       working-directory: api/trips/
 jobs:

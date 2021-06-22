@@ -13,6 +13,7 @@ on:
       - .github/workflows/test_userprofile.yml
 env:  
   NODE_VERSION: '8.x'
+  working_directory: ./apis/userprofile
 jobs:
   tests:
     name: Run tests
@@ -26,4 +27,5 @@ jobs:
     - name: npm run test
       run: |
         npm run test
+      working-directory: ${{env.working_directory}}
    

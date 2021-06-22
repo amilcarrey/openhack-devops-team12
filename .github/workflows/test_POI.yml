@@ -5,10 +5,12 @@ on:
     branches: [ main ]
     paths: 
       - apis/poi/**
+      - .github/workflows/test_POI.yml
   pull_request:
     branches: [ main ]
     paths:
       - apis/poi/**
+      - .github/workflows/test_POI.yml
 
 jobs:
   build:

@@ -27,10 +27,10 @@ jobs:
       with:
         go-version: 1.16
 
-    - working-directory: ${{ working-directory }}
-      name: Build
+    - name: Build
+      working-directory: ${{ working-directory }}
       run: go build -v
 
-    - working-directory: ${{ working-directory }}
-      name: Test
+    - name: Test
+      working-directory: ${{ working-directory }}
       run: go test -v ./tests

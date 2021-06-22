@@ -12,13 +12,15 @@ on:
     paths:
       - apis/trips/**
       - .github/workflows/test_trips.yml
-env: 
-      working-directory: apis/trips/
 jobs:
   
   build:
     runs-on: ubuntu-latest
-    
+    defaults:
+      run: 
+       shell: bash
+       working-directory: ./apis/trips
+      
     steps:
     - uses: actions/checkout@v2
 
@@ -27,10 +29,8 @@ jobs:
       with:
         go-version: 1.16
 
-    - name: Build
-      working-directory: ${{ env.working-directory }}
+    - name: Build      
       run: go build -v
 
-    - name: Test
-      working-directory: ${{ env.working-directory }}
+    - name: Test      
       run: go test -v ./tests

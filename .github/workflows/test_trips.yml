@@ -1,0 +1,35 @@
+name: Go
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths:
+      - apis/trips/**
+      - .github/workflows/test_POI.yml
+  pull_request:
+    branches: [ main ]
+    paths:
+      - apis/trips/**
+      - .github/workflows/test_POI.yml
+jobs:
+  
+  build:
+    runs-on: ubuntu-latest
+    env: 
+      working-directory: api/trips/
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Go      
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.16
+
+    - working-directory: ${{ working-directory }}
+      name: Build
+      run: go build -v
+
+    - working-directory: ${{ working-directory }}
+      name: Test
+      run: go test -v ./tests

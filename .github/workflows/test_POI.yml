@@ -6,14 +6,20 @@ on:
     branches: [ main ]
     paths: 
       - apis/poi/**
+      - .github/workflows/test_POI.yml
   pull_request:
     branches: [ main ]
     paths:
       - apis/poi/**
+      - .github/workflows/test_POI.yml
 
 jobs:
-  build:
 
+  build:
+  
+    env:
+      path: apis/poi/
+    
     runs-on: ubuntu-latest
 
     steps:
@@ -23,9 +29,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore apis/poi/
-      
+      run: dotnet restore ${path}
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build --no-restore  ${path}
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test --no-build --verbosity normal ${path}

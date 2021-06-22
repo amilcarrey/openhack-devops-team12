@@ -1,0 +1,29 @@
+name: userprofile
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+    paths: 
+      - apis/userprofile/**
+      - .github/workflows/test_userprofile.yml
+  pull_request:
+    branches: [ main ]
+    paths:
+      - apis/userprofile/**
+      - .github/workflows/test_userprofile.yml
+env:  
+  NODE_VERSION: '8.x'
+jobs:
+  tests:
+    name: Run tests
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: npm run test
+      run: |
+        npm run test
+   

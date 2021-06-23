@@ -63,23 +63,21 @@ jobs:
     env:
       staging-url: https://openhackbvx30gp2poi-staging.azurewebsites.net
       warmup-path: /api/healthcheck/poi
+      resource-group: openhackbvx30gp2rg
+      app-service: openhackbvx30gp2poi
     runs-on: ubuntu-latest
     steps:    
-    - name: Waiting Warm Up
-      run: |
-        for ((i=1;i<=1500;i++))
-        do
-        status_code=$(curl -L ${{env.staging-url}}${{env.warmup-path}} -w '%{http_code}\n' -s)
-        if [[ $status_code == *"200" ]] ; then
-        echo -e " \e[32m $status_code"
-        else
-        echo -e " \e[31m $status_code"
-        fi
-        done
-      shell: bash
-    - name: Swap
-      run: |
-        echo 'done'
-
+    - name: Check deploy service URL | Validate staging
+      uses: Jtalk/url-health-check-action@v1.5
+      with:        
+        url: ${{env.staging-url}}${{env.warmup-path}}        
+        max-attempts: 3        
+        retry-delay: 30s
+    - name: SWAP
+      if: ${{ success() }}
+      uses: Azure/cli@1.0.4
+      with:
+        inlineScript: | 
+          az webapp deployment slot swap  -g ${{resource-group}} -n ${{app-service}} --slot staging --target-slot production
   
     

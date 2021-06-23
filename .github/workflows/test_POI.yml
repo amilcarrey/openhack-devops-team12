@@ -34,3 +34,26 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal ${path}
         
+  deploy:
+    
+    needs: build
+    if: github.ref == 'refs/heads/main'
+    env: 
+      acr: openhackbvx30gp2acr.azurecr.io
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Build and push
+      run: |
+        cd apis/poi/web
+        docker login ${acr} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+        docker build . -t ${acr}/devopsoh/api-poi:${{ github.sha }}
+        docker push ${acr}/devopsoh/api-poi:${{ github.sha }} 
+
+    - uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'openhackbvx30gp2poi'
+        publish-profile: ${{ secrets.AzureWebAppPublishProfile }}
+        images: ${acr}/api-poi:${{ github.sha }} 
+    

@@ -42,8 +42,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v2
-    - name: Login to DockerHub
-    - uses: azure/docker-login@v1
+    - name: Login to ACR
+      uses: azure/docker-login@v1
       with:
         login-server: ${acr}
         username: ${{ secrets.ACR_USERNAME }}

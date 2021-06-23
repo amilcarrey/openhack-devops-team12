@@ -33,9 +33,4 @@ jobs:
       run: dotnet build --no-restore  ${path}
     - name: Test
       run: dotnet test --no-build --verbosity normal ${path}
-    - name: Workflow error
-      if: failure() 
-      uses: JasonEtco/create-an-issue@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         

@@ -1,8 +1,9 @@
 name: WorkflowFails
 
 on: 
-  workflow_run:
+  workflow_run:  
     workflows: ["maven", "test_POI", "test_trips", "test_userprofile"]
+    branches: ["Test-fail"]
     types: [completed]
     
 jobs:  

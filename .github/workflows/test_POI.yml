@@ -35,7 +35,7 @@ jobs:
       run: dotnet test --no-build --verbosity normal ${path}
         
   deploy:
-    
+    needs: build
     env: 
       acr: openhackbvx30gp2acr.azurecr.io
     runs-on: ubuntu-latest

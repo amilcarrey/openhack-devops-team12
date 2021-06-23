@@ -50,8 +50,8 @@ jobs:
         password: ${{ secrets.ACR_PASSWORD }}
     - run: |
         cd apis/poi/web
-        docker build . -t ${acr}/api-poi:${{ github.sha }}
-        docker push ${acr}/api-poi:${{ github.sha }} 
+        docker build . -t ${acr}/devopsoh/api-poi:${{ github.sha }}
+        docker push ${acr}/devopsoh/api-poi:${{ github.sha }} 
 
     - uses: azure/webapps-deploy@v2
       with:

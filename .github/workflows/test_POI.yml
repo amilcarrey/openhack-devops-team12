@@ -15,8 +15,7 @@ on:
 
 jobs:
 
-  build:
-  
+  build:  
     env:
       path: apis/poi/
     
@@ -34,3 +33,4 @@ jobs:
       run: dotnet build --no-restore  ${path}
     - name: Test
       run: dotnet test --no-build --verbosity normal ${path}
+        

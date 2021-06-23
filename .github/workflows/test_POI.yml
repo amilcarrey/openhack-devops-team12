@@ -54,6 +54,7 @@ jobs:
     - uses: azure/webapps-deploy@v2
       with:
         app-name: 'openhackbvx30gp2poi'
-        publish-profile: ${{ secrets.AzureWebAppPublishProfile }}
-        images: ${acr}/api-poi:${{ github.sha }} 
+        publish-profile: ${{ secrets.AzureWebAppPublishProfileStaging }}
+        images: ${acr}/api-poi:${{ github.sha }}
+        slot-name: staging
     

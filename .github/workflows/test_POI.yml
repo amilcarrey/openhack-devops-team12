@@ -28,11 +28,11 @@ jobs:
       with:
         dotnet-version: 2.1.x
     - name: Restore dependencies
-      run: dotnet restore ${{path}}
+      run: dotnet restore ${{env.path}}
     - name: Build
-      run: dotnet build --no-restore  ${{path}}
+      run: dotnet build --no-restore  ${{env.path}}
     - name: Test
-      run: dotnet test --no-build --verbosity normal ${{path}}
+      run: dotnet test --no-build --verbosity normal ${{env.path}}
         
   deploy:
     

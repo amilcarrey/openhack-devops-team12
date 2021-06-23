@@ -34,3 +34,18 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal ${path}
         
+  deploy:
+    
+    env: 
+      acr: openhackbvx30gp2acr.azurecr.io
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v2
+    - name: Login to DockerHub
+    - uses: azure/docker-login@v1
+      with:
+        login-server: ${acr}
+        username: ${{ secrets.ACR_USERNAME }}
+        password: ${{ secrets.ACR_PASSWORD }}
+    

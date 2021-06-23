@@ -55,6 +55,6 @@ jobs:
       with:
         app-name: 'openhackbvx30gp2poi'
         publish-profile: ${{ secrets.AzureWebAppPublishProfileStaging }}
-        images: ${{env.acr}}/api-poi:${{ github.sha }}
+        images: ${{env.acr}}/devopsoh/api-poi:${{ github.sha }}
         slot-name: staging
     

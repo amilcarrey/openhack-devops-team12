@@ -78,6 +78,6 @@ jobs:
       uses: Azure/cli@1.0.4
       with:
         inlineScript: | 
-          az webapp deployment slot swap  -g ${{resource-group}} -n ${{app-service}} --slot staging --target-slot production
+          az webapp deployment slot swap  -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging --target-slot production
   
     

@@ -34,8 +34,7 @@ jobs:
     - name: Test
       run: dotnet test --no-build --verbosity normal ${{env.path}}
         
-  deploy:
-    
+  deploy:    
     needs: build
     if: github.ref == 'refs/heads/main'
     env: 
@@ -57,4 +56,30 @@ jobs:
         publish-profile: ${{ secrets.AzureWebAppPublishProfileStaging }}
         images: ${{env.acr}}/devopsoh/api-poi:${{ github.sha }}
         slot-name: staging
+    
+  swap:
+    needs: deploy
+    if: github.ref == 'refs/heads/main'
+    env:
+      staging-url: https://openhackbvx30gp2poi-staging.azurewebsites.net
+      warmup-path: /api/healthcheck/poi
+    runs-on: ubuntu-latest
+    steps:    
+    - name: Waiting Warm Up
+      run: |
+        for ((i=1;i<=1500;i++))
+        do
+        status_code=$(curl -L ${{env.staging-url}}${{env.warmup-path}} -w '%{http_code}\n' -s)
+        if [[ $status_code == *"200" ]] ; then
+        echo -e " \e[32m $status_code"
+        else
+        echo -e " \e[31m $status_code"
+        fi
+        done
+      shell: bash
+    - name: Swap
+      run: |
+        echo 'done'
+
+  
     

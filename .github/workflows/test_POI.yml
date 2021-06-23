@@ -69,13 +69,12 @@ jobs:
       run: |
         for ((i=1;i<=1500;i++))
         do
-        status_code=$(curl -L ${{env.staging-url}}${{warmup-path}} -w '%{http_code}\n' -s)
+        status_code=$(curl -L ${{env.staging-url}}${{env.warmup-path}} -w '%{http_code}\n' -s)
         if [[ $status_code == *"200" ]] ; then
         echo -e " \e[32m $status_code"
         else
         echo -e " \e[31m $status_code"
         fi
-        sleep 0.300
         done
       shell: bash
     - name: Swap

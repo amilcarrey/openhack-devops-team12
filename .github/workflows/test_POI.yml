@@ -47,14 +47,14 @@ jobs:
     - name: Build and push
       run: |
         cd apis/poi/web
-        docker login ${acr} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
-        docker build . -t ${acr}/devopsoh/api-poi:${{ github.sha }}
-        docker push ${acr}/devopsoh/api-poi:${{ github.sha }} 
+        docker login ${env.acr} --username ${{ secrets.ACR_USERNAME }} --password ${{ secrets.ACR_PASSWORD }}
+        docker build . -t ${env.acr}/devopsoh/api-poi:${{ github.sha }}
+        docker push ${env.acr}/devopsoh/api-poi:${{ github.sha }} 
 
     - uses: azure/webapps-deploy@v2
       with:
         app-name: 'openhackbvx30gp2poi'
         publish-profile: ${{ secrets.AzureWebAppPublishProfileStaging }}
-        images: ${acr}/api-poi:${{ github.sha }}
+        images: ${env.acr}/api-poi:${{ github.sha }}
         slot-name: staging
     

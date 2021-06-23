@@ -74,6 +74,7 @@ jobs:
         max-attempts: 3        
         retry-delay: 30s
     - name: SWAP
+      if: ${{ success() }}
       uses: Azure/cli@1.0.4
       with:
         inlineScript: | 

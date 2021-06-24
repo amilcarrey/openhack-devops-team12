@@ -62,7 +62,7 @@ jobs:
     if: github.ref == 'refs/heads/main'
     env:
       staging-url: https://openhackbvx30gp2poi-staging.azurewebsites.net
-      prod-url: https://openhackbvx30gp2poi.azurewebsites.net
+      prod-url: https://openhackbvx30gp2poi-prod.azurewebsites.net
       warmup-path: /api/healthcheck/poi
       resource-group: openhackbvx30gp2rg
       app-service: openhackbvx30gp2poi

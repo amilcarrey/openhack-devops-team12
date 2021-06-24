@@ -45,7 +45,7 @@ jobs:
     - name: SonarCloud Scan
       uses: sonarsource/sonarcloud-github-action@master
       with:
-        projectBaseDir: apis/poi
+        projectBaseDir: ./apis/poi/
         args: >
           -Dsonar.organization=ci-back-to-basis
           -Dsonar.projectKey=openhack-t12

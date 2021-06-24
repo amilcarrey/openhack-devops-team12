@@ -73,11 +73,13 @@ jobs:
         url: ${{env.staging-url}}${{env.warmup-path}}        
         max-attempts: 3        
         retry-delay: 30s
-    - name: SWAP
-      if: ${{ success() }}
-      uses: Azure/cli@1.0.4
+    - name: azLog
+      uses: azure/login@v1
       with:
-        inlineScript: | 
+        creds: ${{ secrets.AZURE_CREDENTIALS_POI }}
+        environment: 'AzureStack'
+    - name: SWAP
+      run: | 
           az webapp deployment slot swap  -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging --target-slot production
   
     

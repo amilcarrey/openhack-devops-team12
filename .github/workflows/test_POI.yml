@@ -46,8 +46,8 @@ jobs:
       with:
         projectBaseDir: apis/poi
         args: >
-          -Dsonar.organization= ci-back-to-basis
-          -Dsonar.projectKey= openhack-t12
+          -Dsonar.organization=ci-back-to-basis
+          -Dsonar.projectKey=openhack-t12
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

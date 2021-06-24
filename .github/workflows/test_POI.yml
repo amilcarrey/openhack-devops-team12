@@ -62,23 +62,27 @@ jobs:
     if: github.ref == 'refs/heads/main'
     env:
       staging-url: https://openhackbvx30gp2poi-staging.azurewebsites.net
-      prod-url: https://openhackbvx30gp2poi-prod.azurewebsites.net
+      prod-url: https://openhackbvx30gp2poi.azurewebsites.net
       warmup-path: /api/healthcheck/poi
       resource-group: openhackbvx30gp2rg
       app-service: openhackbvx30gp2poi
     runs-on: ubuntu-latest
-    steps:    
+    steps: 
+    - name: azLog
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS_POI }}
+        environment: 'AzureStack'
+    - name: Start staging
+      run: |
+        az webapp start -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging
     - name: Check deploy service URL | Validate staging
       uses: Jtalk/url-health-check-action@v1.5
       with:        
         url: ${{env.staging-url}}${{env.warmup-path}}        
         max-attempts: 3        
         retry-delay: 30s
-    - name: azLog
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS_POI }}
-        environment: 'AzureStack'
+   
     - name: SWAP
       run: | 
           az webapp deployment slot swap  -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging --target-slot production
@@ -92,6 +96,9 @@ jobs:
       if: ${{ failure() }}
       run: | 
           az webapp deployment slot swap  -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging --target-slot production
-      
+    - name: Stop staging
+      run: |
+        az webapp stop -g ${{env.resource-group}} -n ${{env.app-service}} --slot staging 
+
     
     
